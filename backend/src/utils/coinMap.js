@@ -1,0 +1,23 @@
+// Common symbol -> CoinGecko coin id mapping (avoids a search API call for popular coins)
+module.exports = {
+  BTC: 'bitcoin',
+  ETH: 'ethereum',
+  SOL: 'solana',
+  USDT: 'tether',
+  USDC: 'usd-coin',
+  BNB: 'binancecoin',
+  XRP: 'ripple',
+  ADA: 'cardano',
+  DOGE: 'dogecoin',
+  MATIC: 'matic-network',
+  DOT: 'polkadot',
+  LTC: 'litecoin',
+  TRX: 'tron',
+  AVAX: 'avalanche-2',
+  LINK: 'chainlink',
+  ATOM: 'cosmos',
+  UNI: 'uniswap',
+  SHIB: 'shiba-inu',
+  XLM: 'stellar',
+  ETC: 'ethereum-classic',
+};

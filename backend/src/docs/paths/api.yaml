@@ -1,0 +1,280 @@
+openapi: 3.0.0
+paths:
+  /auth/register:
+    post:
+      tags: [Auth]
+      summary: Register a new user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name: { type: string, example: Pranav }
+                email: { type: string, example: pranav@example.com }
+                password: { type: string, example: secret123 }
+      responses:
+        '201': { description: Registered successfully }
+        '409': { description: Email already registered }
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login user
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string }
+                password: { type: string }
+      responses:
+        '200': { description: Logged in successfully }
+        '401': { description: Invalid credentials }
+
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Refresh access token using refresh token cookie
+      security: []
+      responses:
+        '200': { description: Token refreshed }
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Logout current user
+      responses:
+        '200': { description: Logged out }
+
+  /auth/me:
+    get:
+      tags: [Auth]
+      summary: Get current logged in user
+      responses:
+        '200': { description: Current user }
+
+  /portfolios:
+    post:
+      tags: [Portfolios]
+      summary: Create a portfolio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name: { type: string, example: Long Term Portfolio }
+                description: { type: string }
+      responses:
+        '201': { description: Portfolio created }
+    get:
+      tags: [Portfolios]
+      summary: List portfolios for current user (paginated)
+      parameters:
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: limit
+          schema: { type: integer, default: 10 }
+      responses:
+        '200': { description: Portfolios fetched }
+
+  /portfolios/{id}:
+    get:
+      tags: [Portfolios]
+      summary: Get one portfolio
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Portfolio fetched }
+    put:
+      tags: [Portfolios]
+      summary: Update a portfolio
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Portfolio updated }
+    delete:
+      tags: [Portfolios]
+      summary: Delete a portfolio
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Portfolio deleted }
+
+  /portfolios/{id}/summary:
+    get:
+      tags: [Analytics]
+      summary: Get portfolio investment/value/profit summary
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Portfolio summary }
+
+  /portfolios/{id}/top-asset:
+    get:
+      tags: [Analytics]
+      summary: Get top performing asset in a portfolio
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Top asset fetched }
+
+  /portfolios/{id}/distribution:
+    get:
+      tags: [Analytics]
+      summary: Get asset distribution percentages
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Distribution fetched }
+
+  /assets:
+    post:
+      tags: [Assets]
+      summary: Add a crypto asset to a portfolio
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [coinName, symbol, quantity, buyPrice, currentPrice, portfolioId]
+              properties:
+                coinName: { type: string, example: Bitcoin }
+                symbol: { type: string, example: BTC }
+                quantity: { type: number, example: 0.5 }
+                buyPrice: { type: number, example: 9000000 }
+                currentPrice: { type: number, example: 10000000 }
+                portfolioId: { type: string }
+      responses:
+        '201': { description: Asset created }
+    get:
+      tags: [Assets]
+      summary: List assets with pagination, search, sort and filter
+      parameters:
+        - in: query
+          name: page
+          schema: { type: integer, default: 1 }
+        - in: query
+          name: limit
+          schema: { type: integer, default: 10 }
+        - in: query
+          name: search
+          schema: { type: string }
+          description: Text search across coinName/symbol
+        - in: query
+          name: sort
+          schema: { type: string, example: -profit }
+        - in: query
+          name: symbol
+          schema: { type: string, example: BTC }
+        - in: query
+          name: portfolioId
+          schema: { type: string }
+      responses:
+        '200': { description: Assets fetched }
+
+  /assets/{id}:
+    get:
+      tags: [Assets]
+      summary: Get one asset
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Asset fetched }
+    put:
+      tags: [Assets]
+      summary: Update an asset
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Asset updated }
+    delete:
+      tags: [Assets]
+      summary: Delete an asset
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: Asset deleted }
+
+  /admin/users:
+    get:
+      tags: [Admin]
+      summary: List all users (admin only)
+      responses:
+        '200': { description: Users fetched }
+
+  /admin/users/{id}:
+    delete:
+      tags: [Admin]
+      summary: Delete a user (admin only)
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: User deleted }
+
+  /prices:
+    get:
+      tags: [Prices]
+      summary: Get live crypto prices from CoinGecko
+      parameters:
+        - in: query
+          name: symbols
+          required: true
+          schema: { type: string, example: BTC,ETH }
+          description: Comma-separated coin symbols
+        - in: query
+          name: vs
+          schema: { type: string, default: inr, example: inr }
+          description: Currency to price against
+      responses:
+        '200': { description: Live prices fetched }
+
+  /admin/stats:
+    get:
+      tags: [Admin]
+      summary: Get platform-wide statistics (admin only)
+      responses:
+        '200': { description: Platform statistics }
