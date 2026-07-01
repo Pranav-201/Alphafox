@@ -2,11 +2,18 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Alert from '../components/Alert';
+import logo from '../assets/logo.png';
 
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
+
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -14,6 +21,7 @@ export default function Register() {
     e.preventDefault();
     setError('');
     setLoading(true);
+
     try {
       await register(form);
       navigate('/dashboard');
@@ -25,38 +33,76 @@ export default function Register() {
   };
 
   return (
-    <div className="auth-page">
-      <form className="card auth-card" onSubmit={submit}>
-        <h2>Create your account</h2>
-        <Alert type="error" message={error} />
-        <label>Name</label>
-        <input
-          required
-          value={form.name}
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-        <label>Email</label>
-        <input
-          type="email"
-          required
-          value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          required
-          minLength={6}
-          value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-        />
-        <button className="btn-primary" disabled={loading}>
-          {loading ? 'Creating...' : 'Register'}
+    <div className="auth-page auth-page-simple auth-page-register">
+      <div className="auth-bg-orb auth-bg-orb-left" aria-hidden="true"></div>
+      <div className="auth-bg-orb auth-bg-orb-right" aria-hidden="true"></div>
+
+      <div className="auth-shell">
+        <button className="auth-back-link auth-back-link-floating" onClick={() => navigate('/')} type="button">
+          ← Back to Home
         </button>
-        <p className="muted">
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
-      </form>
+
+        <div className="auth-logo-wrap">
+          <img src={logo} alt="AlphaFox" className="auth-logo" />
+        </div>
+
+        <form className="auth-form-panel glass-panel auth-form-simple" onSubmit={submit}>
+          <div className="auth-form-header auth-form-header-centered">
+            <span className="auth-eyebrow">Join AlphaFox</span>
+            <h2>Create your account</h2>
+            <p>Set up your portfolio workspace in a few quick steps.</p>
+          </div>
+
+          <Alert type="error" message={error} />
+
+          <div className="auth-field">
+            <label>Name</label>
+            <input
+              required
+              placeholder="Your name"
+              value={form.name}
+              onChange={(e) =>
+                setForm({ ...form, name: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="auth-field">
+            <label>Email</label>
+            <input
+              type="email"
+              required
+              placeholder="name@company.com"
+              value={form.email}
+              onChange={(e) =>
+                setForm({ ...form, email: e.target.value })
+              }
+            />
+          </div>
+
+          <div className="auth-field">
+            <label>Password</label>
+            <input
+              type="password"
+              required
+              minLength={6}
+              placeholder="Create a password"
+              value={form.password}
+              onChange={(e) =>
+                setForm({ ...form, password: e.target.value })
+              }
+            />
+          </div>
+
+          <button className="auth-submit" disabled={loading}>
+            {loading ? 'Creating...' : 'Register'}
+          </button>
+
+          <p className="auth-switch">
+            Already have an account? <Link to="/login">Sign in</Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 }
