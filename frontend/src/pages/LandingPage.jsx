@@ -1,10 +1,79 @@
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import logo2 from "../assets/logo2.png";
+import logo3 from "../assets/logo3.png";
 import "./LandingPage.css";
 
+
+const COIN_META = {
+  bitcoin: { symbol: "BTC", name: "Bitcoin", color: "#F7931A", icon: "currency_bitcoin" },
+  ethereum: { symbol: "ETH", name: "Ethereum", color: "#627EEA", icon: "diamond" },
+  solana: { symbol: "SOL", name: "Solana", color: "#14F195", icon: "bolt" },
+  dogecoin: { symbol: "DOGE", name: "Dogecoin", color: "#C2A633", icon: "pets" },
+};
+
+function buildSparklinePath(prices) {
+  if (!prices || prices.length < 2) return "M0,20 L100,20";
+  const min = Math.min(...prices);
+  const max = Math.max(...prices);
+  const range = max - min || 1;
+  const step = 100 / (prices.length - 1);
+  return prices
+    .map((p, i) => {
+      const x = i * step;
+      const y = 38 - ((p - min) / range) * 36;
+      return `${i === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`;
+    })
+    .join(" ");
+}
+
+function useLiveCoins(pollMs = 30000) {
+  const [coins, setCoins] = useState([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchCoins() {
+      try {
+        const ids = Object.keys(COIN_META).join(",");
+        const res = await fetch(
+          `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}&sparkline=true&price_change_percentage=24h`
+        );
+        const data = await res.json();
+
+        const mapped = data.map((c) => {
+          const meta = COIN_META[c.id];
+          const changePct = c.price_change_percentage_24h ?? 0;
+          return {
+            symbol: meta.symbol,
+            name: meta.name,
+            color: meta.color,
+            icon: meta.icon,
+            price: `$${c.current_price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 })}`,
+            change: `${changePct >= 0 ? "+" : ""}${changePct.toFixed(2)}%`,
+            up: changePct >= 0,
+            path: buildSparklinePath(c.sparkline_in_7d?.price?.slice(-24)),
+          };
+        });
+
+        if (isMounted) setCoins(mapped);
+      } catch (err) {
+        console.error("Failed to fetch live coin data:", err);
+      }
+    }
+
+    fetchCoins();
+    const interval = setInterval(fetchCoins, pollMs);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, [pollMs]);
+
+  return coins;
+}
 export default function LandingPage() {
   const navigate = useNavigate();
   const marketsRef = useRef(null);
@@ -13,13 +82,16 @@ export default function LandingPage() {
   const goRegister = () => navigate("/register");
   const scrollToMarkets = () => marketsRef.current?.scrollIntoView({ behavior: "smooth" });
 
-  const coins = [
-    { symbol: "BTC", name: "Bitcoin", price: "$64,120.40", change: "+2.45%", up: true, color: "#F7931A", icon: "currency_bitcoin", path: "M0,35 Q20,30 40,32 T60,20 T80,25 T100,5" },
-    { symbol: "ETH", name: "Ethereum", price: "$3,421.15", change: "-1.12%", up: false, color: "#627EEA", icon: "diamond", path: "M0,10 Q20,15 40,12 T60,30 T80,28 T100,35" },
-    { symbol: "SOL", name: "Solana", price: "$145.82", change: "+8.12%", up: true, color: "#14F195", icon: "bolt", path: "M0,38 Q20,35 40,30 T60,15 T80,10 T100,2" },
-    { symbol: "DOGE", name: "Dogecoin", price: "$0.162", change: "+0.54%", up: true, color: "#C2A633", icon: "pets", path: "M0,20 Q20,22 40,18 T60,25 T80,20 T100,22" },
-  ];
+  const coins = useLiveCoins(30000);
+  // const coins = [
+  //   { symbol: "BTC", name: "Bitcoin", price: "$64,120.40", change: "+2.45%", up: true, color: "#F7931A", icon: "currency_bitcoin", path: "M0,35 Q20,30 40,32 T60,20 T80,25 T100,5" },
+  //   { symbol: "ETH", name: "Ethereum", price: "$3,421.15", change: "-1.12%", up: false, color: "#627EEA", icon: "diamond", path: "M0,10 Q20,15 40,12 T60,30 T80,28 T100,35" },
+  //   { symbol: "SOL", name: "Solana", price: "$145.82", change: "+8.12%", up: true, color: "#14F195", icon: "bolt", path: "M0,38 Q20,35 40,30 T60,15 T80,10 T100,2" },
+  //   { symbol: "DOGE", name: "Dogecoin", price: "$0.162", change: "+0.54%", up: true, color: "#C2A633", icon: "pets", path: "M0,20 Q20,22 40,18 T60,25 T80,20 T100,22" },
+  // ];
 
+  
+  
   const features = [
     { icon: "verified_user", title: "Secure Authentication", desc: "Military-grade encryption and 2FA ensures your portfolio remains your business only." },
     { icon: "query_stats", title: "Real-Time Tracking", desc: "Low-latency data synchronization across 100+ exchanges for precise valuations." },
@@ -161,23 +233,34 @@ export default function LandingPage() {
                 ))}
               </div>
             </div>
+            
+
             <div className="lg:w-1/2 w-full">
-              <div className="relative aspect-square glass-panel rounded-full flex items-center justify-center p-12 border border-white/10 mascot-reveal-shell">
-                <div className="absolute inset-0 bg-primary-container/5 rounded-full animate-pulse"></div>
-                <div className="mascot-fog mascot-fog-1" aria-hidden="true"></div>
-                <div className="mascot-fog mascot-fog-2" aria-hidden="true"></div>
-                <span className="mascot-eye mascot-eye-left" aria-hidden="true"></span>
-                <span className="mascot-eye mascot-eye-right" aria-hidden="true"></span>
-                <div className="relative z-10 text-center mascot-reveal-content">
-                  <img
-                    className="w-4/5 mx-auto mascot-reveal-image"
-                    style={{ filter: "drop-shadow(0 0 50px rgba(255,107,0,0.3))" }}
-                    alt="AlphaFox mascot"
-                    src={logo2}
-                  />
-                </div>
-              </div>
-            </div>
+  <div className="relative aspect-square flex items-center justify-center">
+    <div className="absolute inset-0 animate-pulse"></div>
+    <div className="mascot-fog mascot-fog-1" aria-hidden="true"></div>
+    <div className="mascot-fog mascot-fog-2" aria-hidden="true"></div>
+    <span className="mascot-eye mascot-eye-left" aria-hidden="true"></span>
+    <span className="mascot-eye mascot-eye-right" aria-hidden="true"></span>
+
+    {/* Floating currency icons behind the fox */}
+    <span className="material-symbols-outlined coin-float coin-1" aria-hidden="true">currency_bitcoin</span>
+    <span className="material-symbols-outlined coin-float coin-2" aria-hidden="true">diamond</span>
+    <span className="material-symbols-outlined coin-float coin-3" aria-hidden="true">bolt</span>
+    <span className="material-symbols-outlined coin-float coin-4" aria-hidden="true">paid</span>
+    <span className="material-symbols-outlined coin-float coin-5" aria-hidden="true">attach_money</span>
+    <span className="material-symbols-outlined coin-float coin-6" aria-hidden="true">toll</span>
+
+    <div className="relative z-10 text-center mascot-reveal-content">
+      <img
+        className="mx-auto mascot-reveal-image"
+        style={{ filter: "drop-shadow(0 0 50px rgba(255,107,0,0.3))" }}
+        alt="AlphaFox mascot"
+        src={logo3}
+      />
+    </div>
+  </div>
+</div>
           </div>
         </section>
 
@@ -309,3 +392,6 @@ export default function LandingPage() {
     </div>
   );
 }
+
+
+

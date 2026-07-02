@@ -447,3 +447,71 @@
     transform: translateX(var(--eye-shift, 0)) scale(0.85);
   }
 }
+
+
+.hero-mockup-glow {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,107,0,0.55) 0%, rgba(255,107,0,0.25) 40%, rgba(255,107,0,0) 70%);
+  filter: blur(40px);
+  animation: mockupPulse 3.5s ease-in-out infinite;
+  z-index: 0;
+}
+
+.hero-mockup-image {
+  animation: mockupFloat 4.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 35px rgba(255,107,0,0.45));
+}
+
+@keyframes mockupPulse {
+  0%, 100% { opacity: 0.5; transform: scale(0.92); }
+  50% { opacity: 0.9; transform: scale(1.05); }
+}
+
+@keyframes mockupFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+
+
+
+/* Mascot Animations */
+.coin-float {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  font-size: 1.4rem;
+  opacity: 0;
+  filter: drop-shadow(0 0 8px rgba(255, 107, 0, 0.6));
+  animation-name: coinEmit;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+/* each icon gets its own end position (--tx, --ty), size, color, timing, delay */
+.coin-1 { --tx: -140px; --ty: -110px; font-size: 1.6rem; color: rgba(247,147,26,0.85); animation-duration: 3.2s; animation-delay: 0s; }
+.coin-2 { --tx: 130px;  --ty: -90px;  font-size: 2rem;   color: rgba(98,126,234,0.85); animation-duration: 3.8s; animation-delay: 0.6s; }
+.coin-3 { --tx: -110px; --ty: 100px;  font-size: 1.3rem; color: rgba(20,241,149,0.85); animation-duration: 3s;   animation-delay: 1.2s; }
+.coin-4 { --tx: 150px;  --ty: 90px;   font-size: 1.8rem; color: rgba(255,215,0,0.85);  animation-duration: 3.6s; animation-delay: 1.8s; }
+.coin-5 { --tx: -170px; --ty: 10px;   font-size: 1.2rem; color: rgba(255,140,0,0.8);   animation-duration: 3.4s; animation-delay: 2.4s; }
+.coin-6 { --tx: 170px;  --ty: -10px;  font-size: 1.5rem; color: rgba(194,166,51,0.85); animation-duration: 4s;   animation-delay: 3s; }
+
+@keyframes coinEmit {
+  0% {
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.2);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate(-50%, -50%) translate(var(--tx), var(--ty)) scale(1);
+    opacity: 0;
+  }
+}
