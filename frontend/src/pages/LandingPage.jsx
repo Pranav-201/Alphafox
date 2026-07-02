@@ -129,10 +129,10 @@ export default function LandingPage() {
 
       <main>
         {/* Hero */}
-       <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center pt-10 pb-20 -ml-116 overflow-hidden hero-bg-glow hero-grid-bg">
+       <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center pt-30 pb-20 -ml-116 overflow-hidden hero-bg-glow hero-grid-bg">
           <div className="absolute inset-y-0 left-1/2 w-[680px] -translate-x-1/2 bg-primary-container/10 blur-3xl opacity-35 pointer-events-none"></div>
           <div className="relative z-10 w-full px-margin-desktop max-w-container-max mx-auto">
-            <div className="glass-panel hero-panel mx-auto w-full max-w-4xl rounded-[32px] border border-white/10 shadow-2xl px-6 py-8 md:px-12 md:py-12 text-center fade-in" style={{ animationDelay: "0.2s" }}>
+            <div className=" md:px-12 md:py-12 text-center fade-in" style={{ animationDelay: "0.2s" }}>
               <div className="flex items-center justify-center gap-3 mb-4">
                 <div className="pulse-dot"></div>
                 <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest">Live Market Intelligence</span>
@@ -233,7 +233,7 @@ export default function LandingPage() {
                 ))}
               </div>
             </div>
-            
+           
 
             <div className="lg:w-1/2 w-full">
   <div className="relative aspect-square flex items-center justify-center">

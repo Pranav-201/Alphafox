@@ -20,8 +20,10 @@ function AppRoutes() {
 
   // Hide navbar only on Login and Register pages
   const hideNavbar =
+    location.pathname === "/" ||
     location.pathname === "/login" ||
     location.pathname === "/register";
+
 
   return (
     <>
