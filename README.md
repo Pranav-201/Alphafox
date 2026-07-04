@@ -1,13 +1,10 @@
 <div align="center">
 
-<img src="https://cdn.jsdelivr.net/gh/Pranav-201/Alphafox@main/assets/banner.svg" width="100%"/>
+# 🦊 AlphaFox
 
-<br/><br/>
-
-<img src="https://cdn.jsdelivr.net/gh/Pranav-201/Alphafox@main/assets/banner.svg" width="100%"/>
-<br/>
-
-<img src="https://cdn.jsdelivr.net/gh/Pranav-201/Alphafox@main/assets/typing.svg" width="720"/>
+<a href="#">
+  <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1200&color=FF7A18&center=true&vCenter=true&width=650&lines=Track.+Analyze.+Grow+Your+Crypto+Portfolio.;Full-Stack+Crypto+Portfolio+Tracker;Real-Time+Profit+%2F+Loss+Calculations;Node.js+%E2%80%A2+Express+%E2%80%A2+MongoDB+%E2%80%A2+React"/>
+</a>
 
 <br/><br/>
 
@@ -24,7 +21,7 @@
 <img src="https://img.shields.io/badge/status-active--development-orange?style=flat-square"/>
 <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square"/>
 <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"/>
-<img src="https://img.shields.io/github/stars/yourusername/alphafox?style=social"/>
+<img src="https://img.shields.io/github/stars/Pranav-201/Alphafox?style=social"/>
 
 </div>
 
@@ -311,7 +308,5 @@ This project is licensed under the **MIT License**.
 <div align="center">
 
 ### ⭐ If you found this project useful, please consider giving it a star!
-
-<img src="https://cdn.jsdelivr.net/gh/Pranav-201/Alphafox@main/assets/banner.svg" width="100%"/>
 
 </div>
