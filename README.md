@@ -4,10 +4,10 @@
 
 <br/><br/>
 
-<img src="https://cdn.jsdelivr.net/gh/Pranav-201/A@main/assets/banner.svg" width="100%"/>
+<img src="https://cdn.jsdelivr.net/gh/Pranav-201/Alphafox@main/assets/banner.svg" width="100%"/>
 <br/>
 
-<img src="https://cdn.jsdelivr.net/gh/Pranav-201/A@main/assets/typing.svg" width="720"/>
+<img src="https://cdn.jsdelivr.net/gh/Pranav-201/Alphafox@main/assets/typing.svg" width="720"/>
 
 <br/><br/>
 
@@ -312,6 +312,6 @@ This project is licensed under the **MIT License**.
 
 ### ⭐ If you found this project useful, please consider giving it a star!
 
-<img src="./assets/banner.svg" width="100%"/>
+<img src="https://cdn.jsdelivr.net/gh/Pranav-201/Alphafox@main/assets/banner.svg" width="100%"/>
 
 </div>
