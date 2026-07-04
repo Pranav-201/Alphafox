@@ -1,0 +1,36 @@
+<svg viewBox="0 0 1200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fxGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF7A18">
+        <animate attributeName="stop-color" values="#FF7A18;#FFB347;#FF7A18" dur="6s" repeatCount="indefinite" />
+      </stop>
+      <stop offset="100%" stop-color="#FFB347">
+        <animate attributeName="stop-color" values="#FFB347;#FF7A18;#FFB347" dur="6s" repeatCount="indefinite" />
+      </stop>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="200" fill="#050505" />
+
+  <!-- subtle glow orbits -->
+  <circle cx="140" cy="55" r="2.5" fill="#FF7A18" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;0.15;0.7" dur="3s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="1080" cy="45" r="3.5" fill="#FFB347" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.1;0.6" dur="4s" repeatCount="indefinite" />
+  </circle>
+  <circle cx="1000" cy="160" r="2" fill="#FF7A18" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;0.15;0.6" dur="2.7s" repeatCount="indefinite" />
+  </circle>
+
+  <!-- animated underline accent -->
+  <rect x="330" y="150" width="0" height="4" fill="url(#fxGrad)">
+    <animate attributeName="width" values="0;540;540;0;0" keyTimes="0;0.25;0.75;0.9;1" dur="6s" repeatCount="indefinite" />
+  </rect>
+
+  <text x="600" y="95" font-family="Verdana, Arial, sans-serif" font-size="52" font-weight="700"
+        fill="#ffffff" text-anchor="middle">Alpha<tspan fill="url(#fxGrad)">Fox</tspan></text>
+
+  <text x="600" y="135" font-family="Verdana, Arial, sans-serif" font-size="17"
+        fill="#c9c9c9" text-anchor="middle">Track. Analyze. Grow Your Crypto Portfolio.</text>
+</svg>
