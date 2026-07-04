@@ -4,11 +4,10 @@
 
 <br/><br/>
 
-<img src="./assets/banner.svg" width="100%"/>
-
+<img src="https://cdn.jsdelivr.net/gh/Pranav-201/A@main/assets/banner.svg" width="100%"/>
 <br/>
 
-<img src="./assets/typing.svg" width="720"/>
+<img src="https://cdn.jsdelivr.net/gh/Pranav-201/A@main/assets/typing.svg" width="720"/>
 
 <br/><br/>
 
