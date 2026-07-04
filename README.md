@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./assets/logo.png" width="480"/>
+<img src="https://cdn.jsdelivr.net/gh/Pranav-201/Alphafox@main/assets/banner.svg" width="100%"/>
 
 <br/><br/>
 
